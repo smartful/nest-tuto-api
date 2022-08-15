@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
 
-@Injectable({})
+@Injectable()
 export class AuthService {
   signup() {
     return { msg: 'I am signup !' };
