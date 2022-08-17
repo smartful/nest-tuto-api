@@ -25,7 +25,21 @@ export class AuthService {
     return await newUser.save();
   }
 
-  signin() {
-    return { msg: 'I am sign In !' };
+  async signin(dto: AuthDto) {
+    const user = await this.userModel.findOne({ email: dto.email });
+    if (!user) {
+      throw new ForbiddenException('Credentials incorrect');
+    }
+
+    const passwordMatches = await argon.verify(user.hash, dto.password);
+    if (!passwordMatches) {
+      throw new ForbiddenException('Credentials incorrect');
+    }
+
+    const { ...userData } = user;
+    const data = userData['_doc'];
+    delete data.hash;
+
+    return data;
   }
 }
