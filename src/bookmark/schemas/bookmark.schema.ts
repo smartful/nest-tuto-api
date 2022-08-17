@@ -7,4 +7,5 @@ export const BookmarkSchema = new mongoose.Schema({
   title: String,
   description: String,
   link: String,
+  userId: String,
 });
